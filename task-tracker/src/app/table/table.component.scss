@@ -1,0 +1,21 @@
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: rgba(166, 222, 54);
+}
+
+.mat-column-employee {
+  font-style: italic;
+}
+
+.mat-column-deadline {
+  font-weight: bold;
+}
+
+.mat-column-description:hover {
+  color: rgba(166, 222, 54);
+}
