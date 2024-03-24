@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'tta-page-not-found',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, MatButtonModule],
   templateUrl: './page-not-found.component.html',
   styleUrl: './page-not-found.component.scss'
 })
