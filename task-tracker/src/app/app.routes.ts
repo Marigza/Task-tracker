@@ -5,7 +5,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 export const routes: Routes = [
   { path: '', component: MainComponent },
-  { path: 'task-page', component: TaskPageComponent },
+  { path: 'task-page/:taskId', component: TaskPageComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 
