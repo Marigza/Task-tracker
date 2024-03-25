@@ -1,1 +1,32 @@
-<p>task-page works!</p>
+
+@if (task) {
+  <h2 class="page-header">{{task.title}}</h2>
+  <button mat-raised-button color="primary">Edit</button>
+  <section>
+    <table>
+      <tr>
+        <td class="item-description">Employee</td>
+        <td class="item-content">{{task.employee}}</td>
+      </tr>
+      <tr>
+        <td class="item-description">Description</td>
+        <td class="item-content">{{task.description}}</td>
+      </tr>
+      <tr>
+        <td class="item-description">Deadline</td>
+        <td class="item-content">{{task.deadline | date: 'd MMMM, YYYY'}}</td>
+      </tr>
+      <tr>
+        <td class="item-description">Priority</td>
+        <td class="item-content">{{task.priority}}</td>
+      </tr>
+      <tr>
+        <td class="item-description">Status</td>
+        <td class="item-content">{{task.status}}</td>
+      </tr>
+    </table>
+  </section>
+}
+
+<a mat-raised-button color="accent" routerLink="/">Go to main page</a>
+
