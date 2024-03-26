@@ -27,6 +27,7 @@ export class AddTaskComponent {
     priority: ['', [Validators.required]],
     status: ['', [Validators.required]],
   });
+  public isVisible = true;
 
   constructor(
     private router: Router,
@@ -39,7 +40,7 @@ export class AddTaskComponent {
     const deadline = this.newTask.get('deadline')?.value;
 
     if (deadline) {
-      deadlineValue = new Date(deadline).getTime().toString()
+      deadlineValue = new Date(deadline).setHours(0, 0, 0, 0).toString()
     }
 
     console.log('submit')
@@ -53,10 +54,10 @@ export class AddTaskComponent {
         priority: this.newTask.get('priority')?.value ?? '',
         status: this.newTask.get('status')?.value ?? '',
       };
-      //this.connectionsStoreFacadeService.registrationRequestSend(registParam);
       console.log(newTask)
       this.httpService.createTask(newTask);
-      this.cleanForm()
+
+      this.cleanForm();
     }
   }
 

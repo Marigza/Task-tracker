@@ -55,4 +55,8 @@ export class EditTaskComponent {
       this.router.navigate(['']).catch(({ message }: Error) => message || null)
     }
   }
+
+  cancelUpdate() {
+    this.router.navigate(['']).catch(({ message }: Error) => message || null)
+  }
 }

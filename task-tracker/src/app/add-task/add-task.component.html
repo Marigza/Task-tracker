@@ -1,4 +1,5 @@
-<h3 class="create-header">create new task</h3>
+@if(isVisible){
+  <h3 class="create-header">create new task</h3>
 <form [formGroup]="newTask" class="form" novalidate (ngSubmit)="onSubmit()">
     <div class="field">
       <span class="field-title">task title</span>
@@ -80,3 +81,5 @@
       <button mat-raised-button color="primary" type="submit" [disabled]="newTask.invalid">Add task</button>
     </div>
   </form>
+}
+

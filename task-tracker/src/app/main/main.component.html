@@ -1,1 +1,11 @@
-<p>main works!</p>
+
+@if(!isActiveAddSection) {
+  <button mat-raised-button color="primary" (click)="isActiveAddSection = !isActiveAddSection">add new task</button>
+} @else {
+  <tta-add-task></tta-add-task>
+  <div class="cancel-button">
+    <button mat-raised-button color="primary" (click)="isActiveAddSection = !isActiveAddSection">cancel</button>
+  </div>
+}
+
+<tta-table></tta-table>
