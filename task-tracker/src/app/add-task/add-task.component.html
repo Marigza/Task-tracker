@@ -1,0 +1,85 @@
+@if(isVisible){
+  <h3 class="create-header">create new task</h3>
+<form [formGroup]="newTask" class="form" novalidate (ngSubmit)="onSubmit()">
+    <div class="field">
+      <span class="field-title">task title</span>
+      <mat-form-field appearance="outline" class="field-content">
+      <mat-label>title</mat-label>
+      <input matInput placeholder="enter task title" formControlName="title" required />
+      @if(newTask.controls.title.touched && newTask.controls.title.hasError('required')) {
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    </div>
+    <div class="field">
+      <span class="field-title">task executor</span>
+      <mat-form-field appearance="outline" class="field-content">
+      <mat-label>employee</mat-label>
+      <input
+        matInput
+        placeholder="enter employee"
+        formControlName="employee"
+      />
+      @if(newTask.controls.employee.touched && newTask.controls.employee.hasError('required')){
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    </div>
+    <div class="field">
+      <span class="field-title">add description</span>
+      <mat-form-field appearance="outline" class="field-content">
+      <mat-label>description</mat-label>
+      <input
+        matInput
+        placeholder="enter description"
+        formControlName="description"
+      />
+      @if(newTask.controls.description.touched && newTask.controls.description.hasError('required')){
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    </div>
+    <div class="field">
+      <span class="field-title">add deadline</span>
+      <mat-form-field appearance="outline" class="field-content">
+      <mat-label>deadline</mat-label>
+      <input
+        type="date"
+        matInput
+        placeholder="enter deadline"
+        formControlName="deadline"
+      />
+      @if(newTask.controls.deadline.touched && newTask.controls.deadline.hasError('required')){
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    </div>
+    <div class="field">
+      <span class="field-title">task priority</span>
+      <mat-form-field appearance="outline" class="field-content">
+      <mat-label>priority</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option value="low">low</mat-option>
+        <mat-option value="medium">medium</mat-option>
+        <mat-option value="high">high</mat-option>
+      </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="field">
+      <span class="field-title">task status</span>
+      <mat-form-field appearance="outline" class="field-content">
+      <mat-label>status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="in progress">in progress</mat-option>
+        <mat-option value="review">review</mat-option>
+        <mat-option value="to do">to do</mat-option>
+        <mat-option value="done">done</mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+    <div class="add-button">
+      <button mat-raised-button color="primary" type="submit" [disabled]="newTask.invalid">Add task</button>
+    </div>
+  </form>
+}
+

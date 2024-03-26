@@ -1,0 +1,36 @@
+@if(task) {
+  <h3 class="edit-header"><span>edit task </span><span>"{{task.title}}"</span></h3>
+  <form [formGroup]="editTask" class="form" novalidate (ngSubmit)="onSubmit()">
+    <div class="field">
+      <span class="field-title">task executor</span>
+      <mat-form-field appearance="outline" class="field-content">
+      <mat-label>{{task.employee}}</mat-label>
+      <input
+        matInput
+        placeholder="employee"
+        formControlName="employee"
+      />
+      @if(editTask.controls.employee.touched && editTask.controls.employee.hasError('required')){
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    </div>
+    <div class="field">
+      <span class="field-title">task status</span>
+      <mat-form-field appearance="outline" class="field-content">
+      <mat-label>{{task.status}}</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="in progress">in progress</mat-option>
+        <mat-option value="review">review</mat-option>
+        <mat-option value="to do">to do</mat-option>
+        <mat-option value="done">done</mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+    <div class="manage-button">
+      <button mat-raised-button color="primary" type="submit" [disabled]="editTask.invalid">Update</button>
+      <button mat-raised-button color="primary" type="button" (click)="cancelUpdate()">Cancel</button>
+    </div>
+  </form>
+
+}

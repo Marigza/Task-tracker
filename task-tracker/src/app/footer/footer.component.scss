@@ -1,0 +1,25 @@
+:host {
+  flex: 0 0 10vh;
+  background-color: #69f0ae;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.github-link {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.github-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url(../../assets/icons/github.svg);
+}
