@@ -1,7 +1,7 @@
 
 @if (task) {
   <h2 class="page-header">{{task.title}}</h2>
-  <button mat-raised-button color="primary">Edit</button>
+  <button mat-raised-button color="primary" (click)="editTask()">Edit</button>
   <section>
     <table>
       <tr>
@@ -26,6 +26,8 @@
       </tr>
     </table>
   </section>
+} @else {
+  <div class="existing-message">This task does not exist or has been deleted</div>
 }
 
 <a mat-raised-button color="accent" routerLink="/">Go to main page</a>

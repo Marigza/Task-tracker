@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ import { TaskHttpService } from '../task-http.service';
 export class TaskPageComponent implements OnInit {
   task$: Observable<Task> | null = null;
   task: Task | undefined = undefined;
-  constructor(private route: ActivatedRoute, private fakeHttp: TaskHttpService) { }
+  constructor(private route: ActivatedRoute, private fakeHttp: TaskHttpService, private router: Router) { }
 
   ngOnInit() {
     const routeParams = this.route.snapshot.paramMap;
@@ -28,4 +28,8 @@ export class TaskPageComponent implements OnInit {
     }
   }
 
+  editTask() {
+    console.log(this.task)
+    this.task && this.router.navigate([`/task-edit/${this.task.id}`]).catch(({ message }: Error) => message || null)
+  }
 }
