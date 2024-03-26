@@ -3,12 +3,12 @@ export interface Task {
   title: string;
   employee: string;
   description: string;
-  deadline: number;
-  priority: Priority;
-  status: Status;
+  deadline: string;
+  priority: string;
+  status: string;
 }
 
-export enum Priority{
+export enum Priority {
   Low = 'low',
   Medium = 'medium',
   High = 'high',
