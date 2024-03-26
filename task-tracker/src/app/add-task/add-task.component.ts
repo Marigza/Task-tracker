@@ -43,7 +43,6 @@ export class AddTaskComponent {
       deadlineValue = new Date(deadline).setHours(0, 0, 0, 0).toString()
     }
 
-    console.log('submit')
     if (this.newTask.valid) {
       const newTask: Task = {
         id: uuidv4(),
@@ -54,7 +53,7 @@ export class AddTaskComponent {
         priority: this.newTask.get('priority')?.value ?? '',
         status: this.newTask.get('status')?.value ?? '',
       };
-      console.log(newTask)
+  
       this.httpService.createTask(newTask);
 
       this.cleanForm();

@@ -17,19 +17,18 @@ import { TaskHttpService } from '../task-http.service';
 export class TaskPageComponent implements OnInit {
   task$: Observable<Task> | null = null;
   task: Task | undefined = undefined;
-  constructor(private route: ActivatedRoute, private fakeHttp: TaskHttpService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private http: TaskHttpService, private router: Router) { }
 
   ngOnInit() {
     const routeParams = this.route.snapshot.paramMap;
     const taskIdFromRoute = routeParams.get('taskId');
 
     if (taskIdFromRoute) {
-      this.task = this.fakeHttp.getTask(taskIdFromRoute);
+      this.task = this.http.getTask(taskIdFromRoute);
     }
   }
 
   editTask() {
-    console.log(this.task)
     this.task && this.router.navigate([`/task-edit/${this.task.id}`]).catch(({ message }: Error) => message || null)
   }
 }

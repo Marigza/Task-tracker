@@ -50,7 +50,6 @@ export class EditTaskComponent {
         employee: this.editTask.get('employee')?.value ?? '',
         status: this.editTask.get('status')?.value ?? '',
       };
-      console.log(editedTask)
       this.http.updateTask(editedTask);
       this.router.navigate(['']).catch(({ message }: Error) => message || null)
     }
