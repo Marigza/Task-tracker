@@ -4,16 +4,15 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 import { Task } from '../models/task.model';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { TaskHttpService } from '../task-http.service';
 import { MatButtonModule } from '@angular/material/button';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TaskFilterService } from '../task-filter.service';
 
 @Component({
   selector: 'tta-table',
@@ -24,9 +23,8 @@ import { TaskFilterService } from '../task-filter.service';
 })
 export class TableComponent implements OnInit, AfterViewInit {
 
-  tasks$: Observable<Task[]> | null = null;
   selectedId: number | undefined = undefined;
-  public dataBase: Task[] | undefined = this.http.postInitialTasks();
+  public dataBase$: Observable<Task[]> = this.http.postInitialTasks$();
   public tasks: any;
   public displayedColumns: string[] = ['title', 'employee', 'deadline', 'priority', 'status', 'description'];
 
@@ -49,12 +47,11 @@ export class TableComponent implements OnInit, AfterViewInit {
     private formBuilder: NonNullableFormBuilder
   ) { }
 
-
   ngOnInit() {
-    console.log(this.dataBase)
-
-    this.tasks = new MatTableDataSource(this.dataBase);
-
+    this.subs.add(this.dataBase$.pipe()
+      .subscribe(data => {
+        this.tasks = new MatTableDataSource(data);
+      }))
     this.subs.add(
       this.filter
         .get('employee')
@@ -74,12 +71,10 @@ export class TableComponent implements OnInit, AfterViewInit {
         ?.valueChanges.pipe(
           debounceTime(1500),
           filter(Boolean),
-          tap(console.log),
           filter(value => value.length > 2),
           map(value=> new Date(value).setHours(0, 0, 0, 0))
         )
         .subscribe(value => {
-          console.log(value.toString())
           this.filterBy('deadline', value.toString())
         })
     );
@@ -89,11 +84,9 @@ export class TableComponent implements OnInit, AfterViewInit {
         ?.valueChanges.pipe(
           debounceTime(1500),
           filter(Boolean),
-          tap(console.log),
           filter(value => value.length > 2),
         )
         .subscribe(value => {
-          console.log(value.toString())
           this.filterBy('status', value.toString())
         })
     );
@@ -104,7 +97,6 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   redactTask(row: Task) {
-    console.log(row)
     this.router.navigate([`/task-edit/${row.id}`]).catch(({ message }: Error) => message || null)
   }
 
@@ -122,10 +114,16 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   filterBy(target: 'employee' | 'status' | 'deadline', value: string) {
-    const filteredTasks = this.dataBase?.filter(task => task[target].toLowerCase().includes(value))
-    this.tasks = new MatTableDataSource(filteredTasks)
-
-    return this.tasks;
+    this.subs.add(this.dataBase$.pipe(
+      map(tasks => {
+        return tasks.filter(task => {
+          return task[target].toLowerCase().includes(value);
+        })
+      }),
+    ).subscribe(tasks => {
+      this.tasks = new MatTableDataSource(tasks);
+      return this.tasks;
+    }))
   }
 
   public ngOnDestroy(): void {
