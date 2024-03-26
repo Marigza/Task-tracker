@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from './models/task.model';
 import { db } from './database/database';
+import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
+import { StorageService } from './storage.service';
 
 
 
@@ -10,23 +12,25 @@ import { db } from './database/database';
 })
 export class TaskHttpService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private storageService: StorageService) { }
 
-  public postInitialTasks() {
-    let data: Task[];
-    let dataString: string = localStorage.getItem('dataBase') ?? '';
+  public postInitialTasks$():Observable<Task[]> {
 
-    if (dataString) {
-      data = JSON.parse(dataString)
+    let data: Observable<Task[]>;
+    let storage = localStorage.getItem('dataBase');
+
+    if (storage) {
+      data = this.storageService.getItem('dataBase') as Observable<Task[]>;;
     } else {
-      data = db;
-      localStorage.setItem('dataBase', JSON.stringify(data))
+      data = this.http.get<Task[]>('./assets/database/db.json').pipe(
+        switchMap(data=>this.storageService.setItem('dataBase', data))
+      )
     }
-
     return data;
   }
 
   public getAllTasks(): Task[] | undefined {
+
     const dataFromStorage = localStorage.getItem('dataBase');
     if (dataFromStorage) {
       return JSON.parse(dataFromStorage);
