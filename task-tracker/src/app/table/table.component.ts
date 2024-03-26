@@ -32,11 +32,11 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   public isVisibleFilter = false
 
-   public filter = this.formBuilder.group({
+  public filter = this.formBuilder.group({
     employee: [''],
     status: [''],
     deadline: [''],
-   });
+  });
 
   public subs = new Subscription();
 
